@@ -22,6 +22,8 @@
 - [Как использовать библиотеку](#как-использовать-библиотеку)
   - [Установка](#установка)
   - [Использование](#использование)
+  - [Подключение библиотеки из Git репозитория
+](#подключение-библиотеки-из-git-репозитория)
   - [Примеры использования](#примеры-использования)
 - [Версии библиотеки](#версии-библиотеки)
 - [Совместимость](#совместимость)
@@ -137,6 +139,46 @@ cmake --install build --prefix=C:\msys64\mingw64
 #include <stringutils/stringutils.h>
 ```
 Добавьте в начало файла:
+
+```cpp
+using namespace altuninvv::string;
+```
+
+<a name="подключение-библиотеки-из-git-репозитория"></a>
+#### Подключение библиотеки из Git репозитория
+
+Для подключения из Git-репозитория добавьте код в ваш проект CMake
+
+```cmake
+# Подключаем модуль FetchContent
+include(FetchContent)
+
+# Отключаем тихий режим работы FetchContent
+set(FETCHCONTENT_QUIET FALSE)
+
+# Задаем настройки для загрузки из git-репозитория
+FetchContent_Declare(
+  stringutils  # Имя target нашей библиотеки, должно совпадать с используемым далее 
+  GIT_REPOSITORY https://github.com/vasiliyaltunin/stringutils.git # Путь до репозитория
+  GIT_SHALLOW TRUE # Загружаем только последние коммиты
+  GIT_PROGRESS TRUE # Отображаем процесс загрузки
+  USES_TERMINAL_DOWNLOAD TRUE # Отображать прогресс в терминале (только для Ninja)
+  EXCLUDE_FROM_ALL TRUE # Не устанавливать саму библиотеку при использовании cmake --install  
+)
+
+# Запускаем загрузку из git-репозитория и подключение библиотеки если она не 
+# была ранее загружена
+if(NOT stringutils_POPULATED)
+    FetchContent_MakeAvailable(stringutils)
+endif()
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${stringutils_SOURCE_DIR}/include)
+```
+После этого можно просто добавить в исходный код проекта заголовочный файл:
+```cpp
+#include "stringutils/stringutils.h"
+```
+и директиву:
 
 ```cpp
 using namespace altuninvv::string;
