@@ -1,0 +1,4 @@
+# Путь к файлам с исходным кодом
+set(${PROJECT_NAME}_LIB_SOURCES
+    include/stringutils/stringutils.h
+)

@@ -1,0 +1,25 @@
+# Пытаемся найти Doxygen
+find_package(Doxygen)
+
+if(Doxygen_FOUND) # Если Doxygen найден
+
+    include(${PROJECT_SOURCE_DIR}/cmake/doxygen/doxygen_settings.cmake.in) 
+
+    # Создаем файл Doxyfile на базе шаблона
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/doxygen/doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}/Doxyfile)
+
+    # Добавляем target для сборки документации в папке build/docs
+    # с использованием автоматически сгенерированным файлом 
+    # конфигурации build/docs/Doxyfile
+    doxygen_add_docs(docs
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}
+                    #ALL
+                    CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}/Doxyfile
+                    )
+
+    message("=== Doxygen documentation will be saved into ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}")
+    message("=== Doxygen documentation setup complete")
+else()
+   message("=== No Doxygen found! No documentation will be compiled!")
+endif() 
+

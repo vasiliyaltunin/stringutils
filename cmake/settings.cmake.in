@@ -1,0 +1,34 @@
+# Задаем версию для сборки OFF - static, ON - shared
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+
+message("     BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}")
+message(" === Library build set to STATIC")
+set(LIB_LINK_TYPE "static")
+
+# Префикс который используется для файлов конфигурации cmake
+set("MY_CMAKE_PREFIX" "stringutils")
+
+# Задаем пространство имен
+set("MAIN_NAMESPACE" "altuninvv")
+set("PROJECT_NAMESPACE" "${MY_CMAKE_PREFIX}")
+
+
+# Имя файла для библиотеки к нему автоматически будет добавлено lib
+set("MY_LIB_OUTPUT_NAME" "${MY_CMAKE_PREFIX}")
+
+# Задаем путь для установки CMake-файлов проекта
+set("LIB_INSTALL_CMAKEDIR" "${CMAKE_INSTALL_LIBDIR}/cmake/${MY_CMAKE_PREFIX}" CACHE STRING
+    "Install path for package-related CMake files"
+)
+
+
+# Имя файла с настройками для статической сборки библиотеки
+set(targets_file "${MY_CMAKE_PREFIX}-${LIB_LINK_TYPE}-targets.cmake")
+
+# Требования к версии C++ и поддержки стандарта
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+message("     Cmake prefix: ${MY_CMAKE_PREFIX}")
+
+message(" === Settings setup complete")

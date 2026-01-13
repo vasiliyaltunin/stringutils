@@ -1,0 +1,22 @@
+# Пытаемся найти установленный Google Test
+find_package(GTest)
+
+# Если GTest найден
+if (GTest_FOUND)
+
+   # Добавляем target - tests
+   add_executable(tests tests/test_stringutils.cpp)
+
+   # Добавляем к target библиотеки gtest
+   target_link_libraries (tests GTest::gtest GTest::gtest_main)
+
+   # включаем тестирование
+   enable_testing()
+
+   # Добавляем тесты
+   add_test(NAME StringUtilsTest COMMAND tests)
+   
+   message("=== GoogleTest found and setup complete")
+else()
+   message("=== No GTest found! No Tests will be compiled and run!")
+endif() 

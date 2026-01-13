@@ -1,0 +1,58 @@
+# Кодировка
+set("DOXYGEN_DOC_DOXYFILE_ENCODING" "UTF-8")
+
+# Название проекта
+set("DOXYGEN_DOC_PROJECT_NAME" "StrUtils")
+
+# Версия проекта, должна совпадать с версией в файле CMakeFiles.txt
+# в строке
+# VERSION 0.1.0
+set("DOXYGEN_DOC_PROJECT_NUMBER" "0.1.0")
+
+# Краткое описание проекта
+set("DOXYGEN_DOC_PROJECT_BRIEF" "Бибилотека для обработки строк std::string и std::wstring")
+
+# Лого проекта мы не будем использовать логотип
+set("DOXYGEN_DOC_PROJECT_LOGO" "")
+
+# Иконка проекта мы не будем использовать её
+set("DOXYGEN_DOC_PROJECT_ICON" "")
+
+# Указываем doxygen автоматически просматривать подкаталоги в поисках файлов
+set("DOXYGEN_DOC_RECURSIVE" "YES")
+
+# Как правило мы исключаем все папки с тестами из документации
+set("DOXYGEN_DOC_EXCLUDE_PATTERNS" "*/test/* \\
+                                    ../../cmake \\
+                                   ../../build")
+
+# Эта опция указывает использовать файл README.md как главную страницу нашей 
+# документации
+set("DOXYGEN_DOC_USE_MDFILE_AS_MAINPAGE" "../../README.md")
+
+# Нам не нужен вывод в формате LATEX
+set("DOXYGEN_DOC_GENERATE_LATEX" "NO")
+
+# Вырезаем полные пути из документации, в противном случае у нас в документации будут 
+# длинные пути к файлам
+set("DOXYGEN_DOC_FULL_PATH_NAMES" "NO")
+
+# Задаем язык нашей документации
+set("DOXYGEN_DOC_OUTPUT_LANGUAGE" "Russian")
+
+# Задаем каталог с исходным текстом из которого doxygen будет брать файлы
+set("DOXYGEN_DOC_INPUT" "../../include/stringutils/stringutils.h \\ 
+                         ../../README.md")
+
+set("DOXYGEN_DOC_FILE_PATTERNS" "*.cpp \\
+                                 *.h \\
+                                 *.md \\
+                                 ")
+
+# Имя папки в которой находятся примеры использования
+set("DOXYGEN_DOC_EXAMPLE_PATH" "../../examples")
+
+set("DOXYGEN_DOC_EXAMPLE_PATTERNS" "*.cpp")
+
+# Имя папки в которой будет создана документация
+set("DOXYGEN_DOCS_DIR" "docs")

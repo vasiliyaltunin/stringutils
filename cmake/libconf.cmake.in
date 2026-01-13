@@ -1,0 +1,22 @@
+# Инициализируем проект как библиотеку
+
+# Так как библиотека состоит из заголовочного фала, всегда собираем как STATIC
+add_library(${PROJECT_NAME} STATIC)
+message("     Library will be build as STATIC")
+
+# Инициализируем пространство имен и алиас
+add_library(${MAIN_NAMESPACE}::${PROJECT_NAMESPACE} ALIAS ${PROJECT_NAME})
+
+# Создаем файл конфигурации и указываем папку для его установки
+configure_package_config_file(cmake/config.cmake.in ${MY_CMAKE_PREFIX}-config.cmake
+    INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}"
+)
+
+# Создаем файл конфигурации с указанием версии нашей библиотеки и указываем папку для его установки
+write_basic_package_version_file(${MY_CMAKE_PREFIX}-config-version.cmake
+     COMPATIBILITY SameMajorVersion
+     VERSION ${PACKAGE_VERSION}
+ )
+
+
+message(" === Libconf settings complete")
