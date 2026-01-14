@@ -4,17 +4,35 @@ find_package(GTest)
 # Если GTest найден
 if (GTest_FOUND)
 
+    # Имя цели для сборки документации
+    set("GTESTS_TARGET" "tests")
+
+    # Если такое имя уже существует, значит библиотека собирается как част проекта
+    if(TARGET tests)
+       # Устанавливаем уникальное имя цели для сборки
+       set("GTESTS_TARGET" "stringutils-tests")
+    endif()
+
+    get_directory_property(hasParent PARENT_DIRECTORY)
+
+    # Если проект используется как папка, то устанавливаем уникальное имя
+    if(hasParent)
+       # Устанавливаем уникальное имя цели для сборки
+       set("GTESTS_TARGET" "stringutils-tests")
+    endif()
+
+
    # Добавляем target - tests
-   add_executable(tests tests/test_stringutils.cpp)
+   add_executable(${GTESTS_TARGET} tests/test_stringutils.cpp)
 
    # Добавляем к target библиотеки gtest
-   target_link_libraries (tests GTest::gtest GTest::gtest_main)
+   target_link_libraries (${GTESTS_TARGET} GTest::gtest GTest::gtest_main)
 
    # включаем тестирование
    enable_testing()
 
    # Добавляем тесты
-   add_test(NAME StringUtilsTest COMMAND tests)
+   add_test(NAME StringUtilsTest COMMAND ${GTESTS_TARGET})
    
    message("=== GoogleTest found and setup complete")
 else()
