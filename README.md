@@ -173,6 +173,12 @@ if(NOT stringutils_POPULATED)
 endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${stringutils_SOURCE_DIR}/include)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE  
+    altuninvv::stringutils
+)
+
 ```
 После этого можно просто добавить в исходный код проекта заголовочный файл:
 ```cpp
