@@ -11,7 +11,25 @@ if(Doxygen_FOUND) # Если Doxygen найден
     # Добавляем target для сборки документации в папке build/docs
     # с использованием автоматически сгенерированным файлом 
     # конфигурации build/docs/Doxyfile
-    doxygen_add_docs(docs
+
+    # Имя цели для сборки документации
+    set("DOXYGEN_TARGET" "doc")
+
+    # Если такое имя уже существует, значит библиотека собирается как част проекта
+    if(TARGET doc)
+       # Устанавливаем уникальное имя цели для сборки
+       set("DOXYGEN_TARGET" "stringutils-doc")
+    endif()
+
+    get_directory_property(hasParent PARENT_DIRECTORY)
+
+    # Если проект используется как папка, то устанавливаем уникальное имя
+    if(hasParent)
+       # Устанавливаем уникальное имя цели для сборки
+       set("DOXYGEN_TARGET" "stringutils-doc")
+    endif()
+    
+    doxygen_add_docs(${DOXYGEN_TARGET}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}
                     #ALL
                     CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_DOCS_DIR}/Doxyfile

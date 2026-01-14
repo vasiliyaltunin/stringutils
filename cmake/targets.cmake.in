@@ -17,12 +17,28 @@ target_include_directories(${PROJECT_NAME}
 # Имя файла библиотеки. К нему автоматически будет добавлено lib
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${MY_LIB_OUTPUT_NAME}")
 
+# Имя цели для сборки документации
+set("EXAMPLES_TARGET" "examples")
+
+# Если такое имя уже существует, значит библиотека собирается как част проекта
+if(TARGET examples)
+    # Устанавливаем уникальное имя цели для сборки
+    set("EXAMPLES_TARGET" "stringutils-examples")
+endif()
+
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+# Если проект используется как папка, то устанавливаем уникальное имя
+if(hasParent)
+    # Устанавливаем уникальное имя цели для сборки
+    set("EXAMPLES_TARGET" "stringutils-examples")
+endif()
 
 add_subdirectory(examples EXCLUDE_FROM_ALL)
 
 
-add_custom_target(examples
-    DEPENDS basicexample
+add_custom_target(${EXAMPLES_TARGET}
+    DEPENDS stringutils_basicexample
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
